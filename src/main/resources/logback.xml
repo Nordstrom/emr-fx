@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<configuration>                                                                                                                                                                                                                               
+ 
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">                                                                                                                                                                        
+    <encoder>                                                                                                                                                                                                                                 
+      <pattern>%date{ISO8601} [%thread] %-5level [%X{global}] %logger{36}:%line - %msg%n</pattern>
+    </encoder>                                                                                                                                                                                                                                
+  </appender>                                                                                                                                                                                                                                 
+ 
+ 
+  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">                                                                                                                                                              
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">                                                                                                                                                                
+      <!-- Daily roll over -->                                                                                                                                                                                                                 
+      <fileNamePattern>logs/amp-emr.%d{yyyy-MM-dd}.log</fileNamePattern>
+ 
+      <!-- Keep 7 days' worth of history -->                                                                                                                                                                                                  
+      <maxHistory>99</maxHistory>
+    </rollingPolicy>                                                                                                                                                                                                                          
+ 
+    <encoder>                                                                                                                                                                                                                                 
+      <pattern>%date{ISO8601} [%thread] %-5level [%X{global}] %logger{36}:%line - %msg%n</pattern>
+    </encoder>                                                                                                                                                                                                                                
+  </appender>                                                                                                                                                                                                                                 
+ 
+  <!-- Configure so that it outputs to both console and log file -->
+  
+  <logger name="com.nordstrom.amp" level="DEBUG"/>
+  <logger name="com.nordstrom.amp.metrics" level="OFF"/>
+  <logger name="com.amazonaws" level="WARN"/>    
+  <logger name="org.springframework" level="WARN"/>                                                                                                                                                                          
+  <root level="WARN">                                                                                                                                                                                                                        
+    <appender-ref ref="FILE" />                                                                                                                                                                                                               
+    <appender-ref ref="STDOUT" />                                                                                                                                                                                                             
+  </root>                                                                                                                                                                                                                                     
+</configuration>              

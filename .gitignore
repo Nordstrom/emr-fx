@@ -1,5 +1,11 @@
 # Compiled class file
 *.class
+.gradle/**
+.idea/**
+build/**
+emr-input/**
+emr-output-*/**
+out/**
 
 # Log file
 *.log

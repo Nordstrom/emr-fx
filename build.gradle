@@ -1,0 +1,94 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+
+ext {
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-parse', '--short', 'HEAD'
+        standardOutput = stdout
+    }
+    revision = stdout.toString().trim()
+}
+
+// Java properties
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+ext.artifactId = 'amp-emr'
+ext.env = project.hasProperty('env') ? project.getProperty('env') : 'dev'
+ext.buildNum = project.hasProperty('buildNum') ? project.getProperty('buildNum') : '0'
+version = "1.${buildNum}-${revision}"
+
+repositories {
+    jcenter()
+}
+
+println "Current user is ${System.env.USER}"
+
+jar {
+
+    archiveName = "amp-emr-${System.env.USER}.jar"
+
+    from {
+
+        configurations.runtime.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+
+        configurations.compile.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+
+    manifest {
+        attributes 'Main-Class': 'com.nordstrom.amp.emr.Program'
+    }
+
+    exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
+}
+
+configurations.all {
+    resolutionStrategy {
+
+        //force 'org.apache.httpcomponents:httpclient:4.3.4'
+        //force 'org.apache.httpcomponents:httpcore:4.3.2'
+        //force 'org.apache.httpcomponents:httpmime:4.3.4'
+    }
+}
+
+dependencies {
+    compile 'org.apache.hadoop:hadoop-common:2.7.3',
+            'org.apache.hadoop:hadoop-client:2.7.3',
+
+            'org.apache.commons:commons-lang3:3.7',
+
+            'org.apache.httpcomponents:httpcore:4.4.9',
+            'org.apache.httpcomponents:httpclient:4.5.4',
+            'org.apache.httpcomponents:httpmime:4.5.4',
+
+            'commons-io:commons-io:2.4',
+            'joda-time:joda-time:2.9.5',
+            'com.fasterxml.jackson.core:jackson-databind:2.9.3',
+
+            'com.amazonaws:aws-java-sdk-core:1.11.238',
+            'com.amazonaws:aws-java-sdk-s3:1.11.238',
+            'com.amazonaws:aws-java-sdk-dynamodb:1.11.238',
+            'com.amazonaws:aws-java-sdk-logs:1.11.238',
+            'redis.clients:jedis:2.9.0',
+
+            'org.springframework:spring-context:4.3.4.RELEASE',
+            'org.springframework:spring-core:4.3.4.RELEASE',
+
+            'ch.qos.logback:logback-classic:1.1.7',
+            'ch.qos.logback:logback-classic',
+            'ch.qos.logback:logback-core'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.9'
+}
