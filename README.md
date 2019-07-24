@@ -21,5 +21,5 @@ In this framework, the ```main()``` function sets up the execution environment (
 TBD
 
 ## Lessons Learned
-1. EMR phases (map, reduce) can run for a long time. And in the Amazon environment if your phase doesn't report back (```mapWriteContext() or reduceWriteContext()``) in a "timely" fashion, it will get terminated.
+1. EMR phases (map, reduce) can run for a long time. And in the Amazon environment if your phase doesn't report back (```mapWriteContext() or reduceWriteContext()```) in a "timely" fashion, it will get terminated.
 1. Do not create a single data file for the EMR job to process. Create lots of smaller files that can be distributed across multiple machines.
