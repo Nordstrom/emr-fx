@@ -18,7 +18,7 @@ In this framework, the ```main()``` function sets up the execution environment (
 1. Place breakpoints
 
 ## Deploying an EMR Job to Amazon Web Services
-TBD
+In the src/aws folder is a Python script that automates the creation of an EMR cluster.
 
 ## Lessons Learned
 1. EMR phases (map, reduce) can run for a long time. And in the Amazon environment if your phase doesn't report back (```mapWriteContext() or reduceWriteContext()```) in a "timely" fashion, it will get terminated.

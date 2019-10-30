@@ -19,7 +19,7 @@ ext {
 // Java properties
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-ext.artifactId = 'amp-emr'
+ext.artifactId = 'emr-fx'
 ext.env = project.hasProperty('env') ? project.getProperty('env') : 'dev'
 ext.buildNum = project.hasProperty('buildNum') ? project.getProperty('buildNum') : '0'
 version = "1.${buildNum}-${revision}"
@@ -32,7 +32,7 @@ println "Current user is ${System.env.USER}"
 
 jar {
 
-    archiveName = "amp-emr-${System.env.USER}.jar"
+    archiveName = "emr-fx-${System.env.USER}.jar"
 
     from {
 
